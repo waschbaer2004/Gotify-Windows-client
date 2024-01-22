@@ -18,13 +18,27 @@ def get_gotify_messages(server_url, api_token):
         print(f"Allgemeiner Fehler: {err}")
     return None
 
-gotify_server_url = "https://gotify.******.de"
-gotify_api_token = "******"
+gotify_server_url = "https://gotify.****.de"
+gotify_api_token = "***"
 
 messages = get_gotify_messages(gotify_server_url, gotify_api_token)
 
 if messages:
-    print (messages)
     print("Empfangene Nachrichten:")
     for message in messages:
         print(message)
+
+
+
+# Die gegebene JSON-Zeichenkette als Python-Datenstruktur
+data = messages
+
+# Nachrichten nach Datum sortieren
+sorted_messages = sorted(data["messages"], key=lambda x: x["date"])
+
+
+print('tesssssttt')
+for msg in sorted_messages:
+    print(f"{msg['title'].replace('`', '')}")
+    print(f"{msg['message'].replace('`', '')}")
+    print('')
