@@ -1,4 +1,5 @@
 import requests
+import tkinter as tk
 
 def get_gotify_messages(server_url, api_token):
     url = f"{server_url}/message"
@@ -18,15 +19,11 @@ def get_gotify_messages(server_url, api_token):
         print(f"Allgemeiner Fehler: {err}")
     return None
 
-gotify_server_url = "https://gotify.****.de"
+gotify_server_url = "https://gotify.***.de"
 gotify_api_token = "***"
 
 messages = get_gotify_messages(gotify_server_url, gotify_api_token)
 
-if messages:
-    print("Empfangene Nachrichten:")
-    for message in messages:
-        print(message)
 
 
 
@@ -37,8 +34,39 @@ data = messages
 sorted_messages = sorted(data["messages"], key=lambda x: x["date"])
 
 
-print('tesssssttt')
-for msg in sorted_messages:
-    print(f"{msg['title'].replace('`', '')}")
-    print(f"{msg['message'].replace('`', '')}")
-    print('')
+
+#print('')
+#for msg in sorted_messages:
+    #print(f"{msg['title'].replace('`', '')}")
+    #print(f"{msg['message'].replace('`', '')}")
+    #print('')
+    # old coding for later reference...
+
+
+
+def button_click():
+    for msg in sorted_messages:
+        print(f"{msg['title'].replace('`', '')}, {msg['message'].replace('`', '')}")
+
+
+# Hauptfenster erstellen
+fenster = tk.Tk()
+fenster.title("Gotify-Win-Client")
+
+# Main Body vom Fenster
+label = tk.Label(fenster, text="Bei Klicken des Buttons werden Die Daten abgerufen.")
+label.pack(pady=10)
+
+# Button erstellen und in das Fenster platzieren
+button = tk.Button(fenster, text="Klick mich!", command=button_click)
+button.pack(pady=20)
+
+
+ausgabe_label = tk.Label(text="Ausgabe:")
+ausgabe_label.pack()
+
+ausgabe_label = tk.Label(text=messages)
+ausgabe_label.pack()
+
+# Hauptfenster starten
+fenster.mainloop()
