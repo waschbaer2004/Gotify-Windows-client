@@ -19,6 +19,7 @@ def get_gotify_messages(server_url, api_token):
         print(f"Allgemeiner Fehler: {err}")
     return None
 
+
 gotify_server_url = "https://gotify.***.de"
 gotify_api_token = "***"
 
