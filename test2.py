@@ -1,3 +1,6 @@
+
+
+
 import requests
 import tkinter as tk
 
@@ -33,46 +36,36 @@ data = messages
 
 # Nachrichten nach Datum sortieren
 sorted_messages = sorted(data["messages"], key=lambda x: x["date"])
+# Standard-ausgbae
+for msg in sorted_messages:
+    print(f"{msg['title'].replace('`', '')}, {msg['message'].replace('`', '')}")
 
 
-
-#print('')
-#for msg in sorted_messages:
-    #print(f"{msg['title'].replace('`', '')}")
-    #print(f"{msg['message'].replace('`', '')}")
-    #print('')
-    # old coding for later reference...
-
-
+print("now printing button_click")
+import sys
+from io import StringIO
 
 def button_click():
+    # Speichern der Standardausgabe
+    original_stdout = sys.stdout
+
+    # Erstellen eines Puffers für die Ausgabe
+    output_buffer = StringIO()
+
+    # Umleiten der Standardausgabe zum Puffer
+    sys.stdout = output_buffer
+
     for msg in sorted_messages:
         print(f"{msg['title'].replace('`', '')}, {msg['message'].replace('`', '')}")
-        print("data")
 
+    # Wiederherstellen der Standardausgabe
+    sys.stdout = original_stdout
 
-# Hauptfenster erstellen
-def zeige_ausgabe():
-    ausgabe_text = "Hallo, dies ist eine Ausgabe!"
-    ausgabe_label.config(text=ausgabe_text)
-    print("test")
+    # Rückgabe des Pufferinhalts als String
+    return output_buffer.getvalue()
 
-# Hauptfenster erstellen
-root = tk.Tk()
-root.title("Ausgabe-Fenster")
+# Aufruf der Funktion und Speichern des Rückgabewerts in einer Variable
+output_variable = button_click()
 
-# Button erstellen, der die Ausgabe auslöst
-button = tk.Button(root, text="Zeige Ausgabe", command=zeige_ausgabe)
-button.pack(pady=10)
-
-
-button = tk.Button(root, text="Gotify-Messages", command=button_click)
-button.pack(pady=10)
-
-# Label erstellen, um die Ausgabe anzuzeigen
-ausgabe_label = tk.Label(root, text="")
-ausgabe_label.pack()
-
-# Hauptloop starten
-root.mainloop()
-
+# Ausgabe der Variable
+print(output_variable)
